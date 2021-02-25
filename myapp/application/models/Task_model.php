@@ -41,13 +41,6 @@ class Task_model extends CI_Model {
 
 	}
 
-	public function delete_task($task_id) {
-
-		$this->db->where('id', $task_id);
-		$this->db->delete('tasks');
-
-	}
-
 	public function mark_task_complete($task_id) {
 
 		$this->db->set('status', 1);
@@ -66,6 +59,23 @@ class Task_model extends CI_Model {
 
 		return true;
 
+	}
+
+	public function create_task($data) {
+		$insert_query = $this->db->insert('tasks', $data);
+		return $insert_query;
+	}
+
+	public function edit_task($task_id, $data) {
+		$this->db->where('id', $task_id);
+		$this->db->update('tasks', $data);
+		return true;
+	}
+
+	public function delete_task($task_id) {
+		$this->db->where('id', $task_id);
+		$this->db->where('tasks');
+		return true;
 	}
 }
 

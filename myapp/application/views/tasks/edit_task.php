@@ -36,6 +36,19 @@ $data = array(
 </div>
 
 <div class="form-group">
+
+<?php echo form_label('task Description'); ?>
+
+<?php 
+$data = array(
+	'class' => 'form-control',
+	'name' => 'task_body',
+	'value' => $the_task->task_body
+);
+?>
+<?php echo form_textarea($data); ?>
+<div></div class="form-group">
+
 	
 <?php
 $data = array(
