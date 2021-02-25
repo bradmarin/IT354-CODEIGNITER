@@ -18,14 +18,14 @@ class Tasks extends CI_Controller
     
     // your new methods go here
 
-    // public function index() {
-    //     $project_id = $this->session->userdata('project_id');
-    //     $data['tasks'] = $this->task_model->get_all_tasks($project_id);
+    public function index() {
+        $project_id = $this->session->userdata('user_id');
+        $data['tasks'] = $this->task_model->get_all_tasks($project_id);
 
-    //     $data['main_view'] = "tasks/index";
+        $data['main_view'] = "tasks/create_task";
 
-    //     $this->load->view('layouts/main',$data);
-    // }
+        $this->load->view('layouts/main',$data);
+    }
     
 
     public function create_tasks($project_id) {
@@ -38,7 +38,7 @@ class Tasks extends CI_Controller
             $this->load->view('layouts/main', $data);
         } else {
             $data = array (
-                'project_id' => $project_id,
+                'project_id' => $this->uri->segment(3),
                 'task_name' => $this->input->post('task_name'),
                 'task_body' => $this->input->post('task_body'),
                 'due_date' => $this->input->post('due_date')
@@ -47,7 +47,7 @@ class Tasks extends CI_Controller
             if ($this->task_model->create_task($data)) {
                 $this->session->set_flashdata('tasks_created', 'Your task has been created');
 
-                redirect("projects/display".$project_id);
+                redirect("projects/display".$this->uri->segment(3));
             }
         }
     }
@@ -75,11 +75,10 @@ class Tasks extends CI_Controller
         }
     }
 
-    public function delete($project_id) {
-        if($this->task_model->delete_task($task_id)) {
-            $this->session->set_flashdata('task_deleted', 'Your task has been deleted');
-            redirect("projects/display" . $project_id);
-        }
+    public function delete($project_id, $task_id) {
+        $this->task_model->delete_task($task_id);
+        $this->session->set_flashdata('task_update', 'Your task has been deleted');
+        redirect('projects/display/'.$project_id);
     }
 	
 }
