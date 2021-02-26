@@ -66,7 +66,7 @@ class Task_model extends CI_Model {
 		return $insert_query;
 	}
 
-	public function edit_task($task_id, $data) {
+	public function update_task($task_id, $data) {
 		$this->db->where('id', $task_id);
 		$this->db->update('tasks', $data);
 		return true;
@@ -74,7 +74,7 @@ class Task_model extends CI_Model {
 
 	public function delete_task($task_id) {
 		$this->db->where('id', $task_id);
-		$this->db->where('tasks');
+		$this->db->delete('tasks');
 	}
 }
 
